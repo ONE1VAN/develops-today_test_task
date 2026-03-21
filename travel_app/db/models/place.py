@@ -1,7 +1,7 @@
 from sqlalchemy import String, Boolean, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.db.base import Base
+from travel_app.db.base import Base
 
 
 class Place(Base):
