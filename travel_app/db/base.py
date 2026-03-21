@@ -1,6 +1,4 @@
-from sqlalchemy.orm import declarative_base
+from sqlalchemy.orm import DeclarativeBase
 
-Base = declarative_base()
-
-from travel_app.db.models.project import Project
-from travel_app.db.models.place import Place
+class Base(DeclarativeBase):
+    pass
