@@ -29,7 +29,7 @@ async def create_project(
         raise handle_error(e, logger, f"{prefix}/create")
 
 
-@router.delete("/{project_id}/delete")
+@router.delete("/delete")
 async def delete_project(
         project_id: int,
         session: AsyncSession = Depends(get_session)
@@ -51,7 +51,7 @@ async def delete_project(
         raise handle_error(e, logger, f"{prefix}/{project_id}")
 
 
-@router.patch("/{project_id}/update", response_model=ProjectModel)
+@router.patch("/update", response_model=ProjectModel)
 async def update_project(
         project_id: int,
         project_data: ProjectUpdateModel,
@@ -87,7 +87,7 @@ async def get_projects(
         return projects
 
     except Exception as e:
-        raise handle_error(e, logger, f"{prefix}/")
+        raise handle_error(e, logger, f"{prefix}/get")
 
 
 @router.get("/get_by_id", response_model=ProjectModel)

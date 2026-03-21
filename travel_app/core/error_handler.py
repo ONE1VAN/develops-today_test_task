@@ -3,6 +3,7 @@ from datetime import datetime
 
 from fastapi import HTTPException, status
 from sqlalchemy.exc import SQLAlchemyError, OperationalError
+import httpx
 
 
 def handle_error(e: Exception, logger: logging.Logger, endpoint: str) -> HTTPException:
@@ -21,7 +22,13 @@ def handle_error(e: Exception, logger: logging.Logger, endpoint: str) -> HTTPExc
         client_detail = f"Database error ({endpoint})."
     elif isinstance(e, (ValueError, KeyError)):
         status_code = status.HTTP_422_UNPROCESSABLE_ENTITY
-        client_detail = f"Invalid data input ({endpoint})."
+        client_detail = f"Invalid data input ({endpoint}):\n {e}."
+    elif isinstance(e, httpx.RequestError):
+        status_code = status.HTTP_503_SERVICE_UNAVAILABLE
+        client_detail = f"External API connection error ({endpoint}):\n {e}."
+    elif isinstance(e, httpx.HTTPStatusError):
+        status_code = status.HTTP_502_BAD_GATEWAY
+        client_detail = f"External API returned error ({endpoint}:\n {e})."
     else:
         status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
         client_detail = f"Internal server error ({endpoint})."
