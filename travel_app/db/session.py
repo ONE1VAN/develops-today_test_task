@@ -1,5 +1,3 @@
-from contextlib import asynccontextmanager
-
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 
 from travel_app.core.config import DATABASE_URL
@@ -16,7 +14,6 @@ AsyncSessionLocal = async_sessionmaker(
 )
 
 
-@asynccontextmanager
 async def get_session():
     async with AsyncSessionLocal() as session:
         try:
