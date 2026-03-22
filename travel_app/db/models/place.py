@@ -1,4 +1,4 @@
-from sqlalchemy import String, Boolean, ForeignKey, UniqueConstraint, select
+from sqlalchemy import String, Boolean, ForeignKey, UniqueConstraint, select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -67,7 +67,17 @@ class Place(Base):
         return created_places
 
     @classmethod
+    async def count_by_project_id(cls, session: AsyncSession, project_id: int) -> int:
+        stmt = select(func.count()).where(cls.project_id == project_id)
+        result = await session.execute(stmt)
+        return result.scalar_one()
+
+    @classmethod
     async def add(cls, session: AsyncSession, project_id: int, external_id: int, notes=None, visited=False):
+        places_count = await cls.count_by_project_id(session, project_id)
+        if places_count >= 10:
+            raise ValueError(f"Project {project_id} already has maximum number of places (10)")
+
         api_service = ArtAPIService()
         api_place = await api_service.get_place(external_id)
         existing = await session.execute(
