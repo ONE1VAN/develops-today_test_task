@@ -35,6 +35,7 @@ class Project(Base):
     async def create(cls, session: AsyncSession, **kwargs) -> "Project":
         new_project = cls(**kwargs)
         session.add(new_project)
+        await session.flush()
         await session.refresh(new_project)
         return new_project
 
