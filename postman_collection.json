@@ -1,0 +1,267 @@
+{
+  "info": {
+    "name": "Travel App API",
+    "description": "Collection of Travel App API endpoints. Import into Postman to test all endpoints.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "description": "Authentication endpoints for users",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nick\": \"ivan\",\n  \"password\": \"mypassword\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/v1/auth/register",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "v1", "auth", "register"]
+            },
+            "description": "Create a new user. Password will be hashed automatically."
+          },
+          "response": []
+        },
+        {
+          "name": "Login User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nick\": \"ivan\",\n  \"password\": \"mypassword\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/v1/auth/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "v1", "auth", "login"]
+            },
+            "description": "Login user. Returns user info if credentials are valid."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Projects",
+      "description": "Endpoints for managing travel projects",
+      "item": [
+        {
+          "name": "Create Project",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Italy Trip\",\n  \"description\": \"Summer vacation\",\n  \"start_date\": \"2026-06-01\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/v1/projects/create",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "v1", "projects", "create"]
+            },
+            "description": "Create a new travel project."
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Projects",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/v1/projects/get",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "v1", "projects", "get"]
+            },
+            "description": "List all travel projects. Requires authentication."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Single Project",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/v1/projects/get_by_id?project_id=1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "v1", "projects", "get_by_id"],
+              "query": [{ "key": "project_id", "value": "1" }]
+            },
+            "description": "Get a single project by its ID. Requires authentication."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Project",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Italy Trip Updated\",\n  \"description\": \"Updated description\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/v1/projects/update?project_id=1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "v1", "projects", "update"],
+              "query": [{ "key": "project_id", "value": "1" }]
+            },
+            "description": "Update project information by ID."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Project",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/v1/projects/delete?project_id=1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "v1", "projects", "delete"],
+              "query": [{ "key": "project_id", "value": "1" }]
+            },
+            "description": "Delete project by ID. Cannot delete if any places are visited."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Places",
+      "description": "Endpoints for managing places within projects",
+      "item": [
+        {
+          "name": "Create Project with Places",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Italy Trip\",\n  \"description\": \"Summer vacation\",\n  \"start_date\": \"2026-06-01\",\n  \"places\": [\n    {\"external_id\": 123, \"notes\": \"must visit\", \"visited\": false},\n    {\"external_id\": 456, \"notes\": \"optional\", \"visited\": false}\n  ]\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/v1/places/create_with_project",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "v1", "places", "create_with_project"]
+            },
+            "description": "Create a new project and its places in one request."
+          },
+          "response": []
+        },
+        {
+          "name": "Add Place to Project",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"project_id\": 1,\n  \"external_id\": 789,\n  \"notes\": \"new place\",\n  \"visited\": false\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/v1/places/add",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "v1", "places", "add"]
+            },
+            "description": "Add a new place to an existing project. Checks external API before adding."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Place",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"notes\": \"visited museum\",\n  \"visited\": true\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/v1/places/update?place_id=1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "v1", "places", "update"],
+              "query": [{ "key": "place_id", "value": "1" }]
+            },
+            "description": "Update place notes or mark as visited."
+          },
+          "response": []
+        },
+        {
+          "name": "List Places for Project",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/v1/places/get_project_places?project_id=1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "v1", "places", "get_project_places"],
+              "query": [{ "key": "project_id", "value": "1" }]
+            },
+            "description": "List all places for a specific project."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Place by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/v1/places/get_by_id?place_id=1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "v1", "places", "get_by_id"],
+              "query": [{ "key": "place_id", "value": "1" }]
+            },
+            "description": "Get a single place within a project by its ID."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
