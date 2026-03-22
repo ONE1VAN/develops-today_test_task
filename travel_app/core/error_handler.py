@@ -6,10 +6,11 @@ from sqlalchemy.exc import SQLAlchemyError, OperationalError
 import httpx
 
 
-def handle_error(e: Exception, logger: logging.Logger, endpoint: str) -> HTTPException:
+def handle_error(e: Exception, logger: logging.Logger, endpoint: str, user_name: str = None) -> HTTPException:
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     error_type = type(e).__name__
     error_msg = str(e)
+    user = user_name or "anonymous"
 
     if isinstance(e, HTTPException):
         status_code = e.status_code
@@ -33,7 +34,7 @@ def handle_error(e: Exception, logger: logging.Logger, endpoint: str) -> HTTPExc
         status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
         client_detail = f"Internal server error ({endpoint})."
 
-    log_line = f"[{now}] - {endpoint} - {status_code} - {error_type}: {error_msg}"
+    log_line = f"[{now}] - {user} - {endpoint} - {status_code} - {error_type}: {error_msg}"
 
     logger.error(log_line)
 

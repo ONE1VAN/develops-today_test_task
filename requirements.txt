@@ -16,6 +16,8 @@ anyio==4.12.1
     #   starlette
 async-lru==2.3.0
     # via -r requirements.in
+bcrypt==5.0.0
+    # via passlib
 certifi==2026.2.25
     # via
     #   httpcore
@@ -40,6 +42,8 @@ idna==3.11
     # via
     #   anyio
     #   httpx
+passlib[bcrypt]==1.7.4
+    # via -r requirements.in
 pydantic==2.12.5
     # via
     #   -r requirements.in
