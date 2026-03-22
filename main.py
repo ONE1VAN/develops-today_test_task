@@ -7,6 +7,7 @@ from travel_app.db.base import Base
 from travel_app.core.config import HOST, PORT, RELOAD
 from travel_app.api.endpoints.projects import router as projects_router
 from travel_app.api.endpoints.places import router as places_router
+from travel_app.api.endpoints.auth import router as auth_router
 
 
 @asynccontextmanager
@@ -20,6 +21,7 @@ app = FastAPI(lifespan=lifespan)
 
 app.include_router(projects_router, prefix="/api/v1")
 app.include_router(places_router, prefix="/api/v1")
+app.include_router(auth_router, prefix="/api/v1")
 
 if __name__ == "__main__":
     uvicorn.run(
