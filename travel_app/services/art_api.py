@@ -1,5 +1,6 @@
 import httpx
 from pydantic import ValidationError
+from async_lru import alru_cache
 
 from travel_app.schemas.art_api import ArtAPIResponseModel, ArtPlaceModel
 
@@ -7,6 +8,7 @@ from travel_app.schemas.art_api import ArtAPIResponseModel, ArtPlaceModel
 class ArtAPIService:
     BASE_URL = "https://api.artic.edu/api/v1/artworks"
 
+    @alru_cache(maxsize=128)
     async def get_place(self, external_id: int) -> ArtPlaceModel:
         async with httpx.AsyncClient() as client:
             response = await client.get(f"{self.BASE_URL}/{external_id}")
