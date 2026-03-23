@@ -32,14 +32,12 @@
 
 ---
 
-## Docker Setup
+## Setup
 
 ### Prerequisites
 
 * Docker
 * Docker Compose
-
-### Build and Run
 
 ### Build the Docker and run locally:
 ```
@@ -54,6 +52,11 @@ http://localhost:8000
 docker logs -f <container_id>
 ```
 ##### or use `logs/requests/errors.log` to see the logs history (file will automaticly be created)
+---
+# `Important`
+### To have an access to endpoints, first of all you need to create a user in `/register` endpoint. 
+### Then use SwaggerUI Authorization button to login
+
 ---
 
 ## API Documentation
