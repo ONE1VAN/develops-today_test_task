@@ -41,7 +41,7 @@
 
 ### Build the Docker and run locally:
 ```
-docker-compose up --build.
+docker-compose up --build
 ```
 ### The API will be available at: 
 ```
